@@ -3,57 +3,69 @@ import java.util.Scanner;
 public class LinkedListOps {
 
     Node head;
-    Scanner sc = new Scanner(System.in);
+    Scanner sc;
 
-    void insertAtStart() {
+    void insertAtStart(int number) {
+
+        // Intantiate a new temporary node with the data
+        Node temp = new Node();
+        temp.data = number;
+
         if (head == null) { // When list is empty
-            head = new Node();
-            head.data = sc.nextInt();
+            // Assign temp as the starting node
+            head = temp;
         } else { // When list is not empty
-            Node n1 = new Node();
-            n1.data = sc.nextInt();
-            n1.next = head;
-            head = n1;
+            // Assign head node as the temp's next node
+            temp.next = head;
+            // Assign temp as the starting node
+            head = temp;
         }
     }
 
-    void insertatlast(int n) {
+    void insertatlast(int number) {
         Node start = head;
-        while (start != null) {
+
+        // Intantiate a new temporary node with the data
+        Node temp = new Node();
+        temp.data = number;
+
+        if (start == null) { // When list is empty
+
+            // Assign temp as the starting node
+            head = temp;
+
+        } else { // When list is not empty
+
+            while (start.next != null) {// Traverse to the end of the list
+                start = start.next;
+            }
+
+            // Insert new Node at the end of the list
+            start.next = temp;
+
+        }
+    }
+
+    void insertAfterTarget(int target, int number) {
+        Node start = head;
+        while (start != null && start.data != target) { // Traverse to the node having the value same as target value
             start = start.next;
         }
-        Scanner sc = new Scanner(System.in);
-        for (int i = 0; i < n; i++) {
-            Node temp = new Node();
-            temp.data = sc.nextInt();
-            if (start != null) { // When list is not empty
-                start.next = temp;
-                start = temp;
-            } else { // When list is empty
-                start = temp;
-                head = temp;
-            }
-        }
-
-    }
-
-    void insertAfterTarget(int target) {
-        Node temp = head;
-        while (temp != null && temp.data != target) {
-            temp = temp.next;
-        }
-        if (temp != null) {
-            Node n1 = new Node();
-            System.out.println("Enter an element:-");
-            n1.data = sc.nextInt();
-            n1.next = temp.next;
-            temp.next = n1;
-        } else {
+        if (start == null) { // Target value not present in the list
             System.out.println("Target not found");
+        } else {
+            // Intantiate a new temporary node with the data
+            Node temp = new Node();
+            temp.data = number;
+
+            // Logic to place the node next to target node
+            temp.next = start.next;
+            start.next = temp;
         }
     }
 
-    void display() { // TO display the list
+    // TO display the list
+    void display() {
         System.out.println("Linked List:-");
         Node temp = head;
         while (temp != null) {
@@ -63,16 +75,29 @@ public class LinkedListOps {
     }
 
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         LinkedListOps ob = new LinkedListOps();
-        System.out.println("Enter 3 elements:");
-        ob.insertatlast(4);
+
+        System.out.println("==============================================");
+        System.out.println("Enter an element to be inserted at last:");
+        int n = sc.nextInt();
+        ob.insertatlast(n);
         ob.display();
-        System.out.println("Enter starting element:");
-        ob.insertAtStart();
-        System.out.println("After insertion at start========");
+
+        System.out.println("==============================================");
+        System.out.println("Enter an element to be inserted at start:");
+        int s = sc.nextInt();
+        ob.insertAtStart(s);
         ob.display();
-        ob.insertAfterTarget(3);
-        System.out.println("After target insertion=========");
+
+        System.out.println("=================================================");
+        System.out.println("Enter target after which new number has to be inserted:");
+        int target = sc.nextInt();
+        System.out.println("Enter the new number to be inserted after " + target);
+        int newn = sc.nextInt();
+        ob.insertAfterTarget(target, newn);
         ob.display();
+
+        sc.close();
     }
 }
