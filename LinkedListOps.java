@@ -74,6 +74,31 @@ public class LinkedListOps {
         }
     }
 
+    void delete(int target) {
+        Node start = head;
+        if (start.data == target) {
+            head = start.next;
+        } else {
+            while (start.next != null && start.next.data != target) { // Traverse to the node having the value same as
+                // target value
+                start = start.next;
+            }
+            start.next = start.next.next;
+        }
+    }
+
+    void search(int target) {
+        Node start = head;
+        while (start != null && start.data != target) { // Traverse to the node having the value same as target value
+            start = start.next;
+        }
+        if (start == null) {
+            System.out.println("Target not found");
+        } else {
+            System.out.println("Target Found");
+        }
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         LinkedListOps ob = new LinkedListOps();
@@ -97,6 +122,13 @@ public class LinkedListOps {
         int newn = sc.nextInt();
         ob.insertAfterTarget(target, newn);
         ob.display();
+
+        System.out.println("=====================================================");
+        ob.delete(5);
+        ob.display();
+
+        System.out.println("========================================================");
+        ob.search(6);
 
         sc.close();
     }
